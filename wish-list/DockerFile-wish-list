@@ -1,0 +1,12 @@
+FROM node:19.6
+
+WORKDIR /whish-list/wish-list
+
+ENV VITE_NODE_ENV=development
+
+COPY package*.json ./
+
+RUN npm install
+
+
+CMD ["npm", "run", "serve"]
