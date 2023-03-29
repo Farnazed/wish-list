@@ -1,0 +1,32 @@
+version: '1'
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: DockerFile-api
+    ports:
+      - "3081:3081"
+    container_name: dev-wish-list-api
+    volumes:
+       - ./api:/whish-list/api
+       - /whish-list/api/node_modules
+  wish-list:
+    build:
+      context: ./wish-list
+      dockerfile: DockerFile-wish-list
+    ports:
+      - "8081:8081"
+    container_name: dev-wish-list
+    volumes:
+       - ./wish-list:/whish-list/wish-list
+       - /whish-list/wish-list/node_modules
+  nginx:
+      restart: always
+      build:
+          context: ./nginx
+          dockerfile: DockerFile
+      ports:
+      - "80:80"
+      depends_on:
+      - wish-list
+      - api
