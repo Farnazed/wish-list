@@ -8,6 +8,6 @@ COPY package*.json ./
 
 RUN NODE_ENV=${NODE_ENV} npm install
 
-EXPOSE 3080
+EXPOSE 3081
 
 CMD ["npm", "run", "serve"]

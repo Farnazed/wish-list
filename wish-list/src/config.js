@@ -11,7 +11,7 @@ const environmentConstants =
       }
     : {
         NODE_ENV: import.meta.env.VITE_NODE_ENV,
-        API_URL: "http://localhost:3080",
+        API_URL: "http://localhost:3081",
       };
 
 export const { NODE_ENV, API_URL } = { ...environmentConstants };
