@@ -1,24 +1,22 @@
 <template>
-  <div class="body" @click="plotPoints">
+  <div class="w-full h-full point-box" @click="plotPoints">
     <div
       v-for="point in points"
       :key="point.x + point.y"
       :id="point.x + point.y"
       ref="elementRefs"
       :class="`point `"
-      :style="{ top: `${point.y}%`, left: `${point.x}%` }"
+      :style="{ top: `${point.y}px`, left: `${point.x}px` }"
     ></div>
+    <find-dot />
   </div>
 </template>
-
 <script setup>
-import { getHealthCheck } from "../services/healthcheck";
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import FindDot from "./FindDot.vue";
 
 const points = ref([]);
 const elementRefs = ref([]);
-let textFromBackend = ref("");
 
 watch(
   points,
@@ -29,34 +27,22 @@ watch(
 );
 
 function plotPoints(event) {
-  console.log(window.innerHeight, window.innerWidth);
+  console.log(event);
   points.value.push({
-    x: (event.clientX / window.innerWidth) * 100,
-    y: (event.clientY / window.innerHeight) * 100,
+    x: event.clientX,
+    y: event.clientY,
     id: event.clientX + event.clientY,
   });
 }
-
-onMounted(async () => {
-  try {
-    await getHealthCheck().then((result) => result.message);
-  } catch (error) {
-    console.log(error);
-    textFromBackend.value = "could not get the text";
-  }
-});
 </script>
-<style>
+<style scoped>
 .rounded {
   width: 30px;
   height: 30px;
   border: 2px solid #d76e6e75;
   border-radius: 50%;
 }
-.body {
-  width: 100vh;
-  height: 100vh;
-}
+
 .point {
   position: absolute;
   width: 20px;
